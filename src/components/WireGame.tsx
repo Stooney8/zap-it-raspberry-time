@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { useGameContext } from '@/context/GameContext';
 
@@ -50,13 +50,14 @@ const WireGame: React.FC = () => {
     const x = ((e.clientX - containerRect.left) / containerRect.width) * 100;
     const y = ((e.clientY - containerRect.top) / containerRect.height) * 100;
     
+    // For vertical orientation, we track progress by Y position instead of X
     // Constrain within game area
     const clampedX = Math.max(5, Math.min(95, x));
     const clampedY = Math.max(5, Math.min(95, y));
     
     setLoopPosition({ x: clampedX, y: clampedY });
     checkCollision();
-    updateProgress(clampedX);
+    updateProgress(clampedY); // Use Y for progress in vertical layout
   };
 
   const updateLoopPositionTouch = (touch: React.Touch) => {
@@ -72,12 +73,13 @@ const WireGame: React.FC = () => {
     
     setLoopPosition({ x: clampedX, y: clampedY });
     checkCollision();
-    updateProgress(clampedX);
+    updateProgress(clampedY); // Use Y for progress in vertical layout
   };
 
-  const updateProgress = (x: number) => {
-    // Update progress based on horizontal position
-    const progress = Math.min(100, Math.max(0, ((x - 10) / 80) * 100));
+  const updateProgress = (y: number) => {
+    // Update progress based on vertical position (bottom to top)
+    // Invert the Y calculation since lower Y values are at the top
+    const progress = Math.min(100, Math.max(0, ((90 - y) / 80) * 100));
     setPathCompleted(progress);
     
     // Check if the player reached the end
@@ -120,15 +122,16 @@ const WireGame: React.FC = () => {
     const wireRect = wireRef.current.getBoundingClientRect();
     const loopRect = loopRef.current.getBoundingClientRect();
     
-    // Simple collision detection - needs to be adjusted based on actual wire path
-    const loopCenterY = loopRect.top + (loopRect.height / 2);
+    // Update collision detection for vertical layout
+    // Check horizontal position instead of vertical
+    const loopCenterX = loopRect.left + (loopRect.width / 2);
     
     // Create a margin of error around the "wire" path
-    const wireTop = wireRect.top + (wireRect.height * 0.3);
-    const wireBottom = wireRect.top + (wireRect.height * 0.7);
+    const wireLeft = wireRect.left + (wireRect.width * 0.3);
+    const wireRight = wireRect.left + (wireRect.width * 0.7);
     
     // If loop's center goes outside the safe zone, count as error
-    if (loopCenterY < wireTop || loopCenterY > wireBottom) {
+    if (loopCenterX < wireLeft || loopCenterX > wireRight) {
       // Add error and trigger buzz animation
       addError();
       
@@ -161,7 +164,7 @@ const WireGame: React.FC = () => {
       // Reset game state
       setIsFinished(false);
       setPathCompleted(0);
-      setLoopPosition({ x: 10, y: 50 });
+      setLoopPosition({ x: 50, y: 90 }); // Start at bottom for vertical layout
     }
     
     // Clean up event listeners
@@ -178,7 +181,7 @@ const WireGame: React.FC = () => {
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <div className="w-full max-w-md mx-auto">
       <div className="mb-4 flex justify-between items-center">
         <div className="text-primary font-game text-sm">
           Progress: {Math.floor(pathCompleted)}%
@@ -190,17 +193,17 @@ const WireGame: React.FC = () => {
       
       <div 
         ref={gameContainerRef} 
-        className="relative w-full h-64 bg-card rounded-lg border-2 border-primary overflow-hidden"
+        className="relative w-full h-[500px] bg-card rounded-lg border-2 border-primary overflow-hidden"
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
       >
-        {/* Game wire - this would be more complex in a real game */}
+        {/* Vertical wire path */}
         <div 
           ref={wireRef}
-          className="absolute top-0 left-0 w-full h-full flex items-center"
+          className="absolute top-0 left-0 w-full h-full flex justify-center"
         >
-          <div className="h-6 w-full bg-secondary opacity-30"></div>
-          <div className="absolute top-1/2 left-0 transform -translate-y-1/2 h-1 w-full bg-secondary"></div>
+          <div className="w-6 h-full bg-secondary opacity-30"></div>
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1 h-full bg-secondary"></div>
         </div>
         
         {/* Loop that player moves */}
@@ -216,14 +219,14 @@ const WireGame: React.FC = () => {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-primary rounded-full animate-pulse-custom"></div>
         </div>
         
-        {/* Start indicator */}
-        <div className="absolute left-[10%] top-1/2 transform -translate-y-1/2 w-4 h-16 bg-accent rounded-md">
-          <span className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs font-game text-accent">START</span>
+        {/* Start indicator (bottom) */}
+        <div className="absolute bottom-[5%] left-1/2 transform -translate-x-1/2 w-16 h-4 bg-accent rounded-md">
+          <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-game text-accent">START</span>
         </div>
         
-        {/* End indicator */}
-        <div className="absolute right-[10%] top-1/2 transform -translate-y-1/2 w-4 h-16 bg-accent rounded-md">
-          <span className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs font-game text-accent">FINISH</span>
+        {/* End indicator (top) */}
+        <div className="absolute top-[5%] left-1/2 transform -translate-x-1/2 w-16 h-4 bg-accent rounded-md">
+          <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 text-xs font-game text-accent">FINISH</span>
         </div>
       </div>
       

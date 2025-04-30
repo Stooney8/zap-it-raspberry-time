@@ -38,8 +38,8 @@ const GameTimer: React.FC = () => {
   }
   
   return (
-    <div className="w-full max-w-md mx-auto mb-4 p-3 bg-card rounded-lg border-2 border-primary">
-      <div className="text-2xl font-game text-center text-primary animate-glow">
+    <div className="w-full max-w-md mx-auto mb-2 p-2 bg-card rounded-lg border-2 border-primary">
+      <div className="text-xl font-game text-center text-primary animate-glow">
         {formatTime(elapsedTime)}
       </div>
     </div>

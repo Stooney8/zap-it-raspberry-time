@@ -6,29 +6,30 @@ import WireGame from '@/components/WireGame';
 import GameTimer from '@/components/GameTimer';
 import GameMessage from '@/components/GameMessage';
 import GameResults from '@/components/GameResults';
-import HardwareInstructions from '@/components/HardwareInstructions';
 import { Button } from '@/components/ui/button';
 
 const GameScreen = () => {
-  const { gameState, resetGame } = useGameContext();
+  const { gameState } = useGameContext();
   
   return (
-    <div className="container py-8 px-4">
-      <h1 className="text-3xl font-game text-primary text-center mb-8">Buzz Wire Challenge</h1>
+    <div className="container py-4 px-2 flex flex-col min-h-screen">
+      <h1 className="text-2xl font-game text-primary text-center mb-4">Buzz Wire Challenge</h1>
       
-      {gameState === 'start' && <PlayerRegistration />}
+      <div className="flex-grow flex flex-col justify-center">
+        {gameState === 'start' && <PlayerRegistration />}
+        
+        {gameState === 'playing' && (
+          <>
+            <GameTimer />
+            <GameMessage />
+            <WireGame />
+          </>
+        )}
+        
+        {gameState === 'finished' && <GameResults />}
+      </div>
       
-      {gameState === 'playing' && (
-        <>
-          <GameTimer />
-          <GameMessage />
-          <WireGame />
-        </>
-      )}
-      
-      {gameState === 'finished' && <GameResults />}
-      
-      <div className="mt-8 text-center">
+      <div className="mt-4 text-center">
         <Button 
           variant="outline" 
           className="font-game text-xs"

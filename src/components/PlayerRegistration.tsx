@@ -64,25 +64,25 @@ const PlayerRegistration: React.FC = () => {
   };
   
   return (
-    <Card className="w-full max-w-xl mx-auto border-primary bg-card">
+    <Card className="w-full max-w-md mx-auto border-primary bg-card">
       <CardHeader className="pb-2">
         <CardTitle className="text-center font-game text-xl text-primary">
           Buzz Wire Challenge
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="text-center mb-6">
-          <p className="font-game text-sm mb-6">{currentMessage}</p>
+        <div className="text-center mb-4">
+          <p className="font-game text-sm mb-4">{currentMessage}</p>
           <div className={cn(
-            "w-24 h-24 mx-auto mb-4 rounded-full flex items-center justify-center transition-all duration-500",
+            "w-20 h-20 mx-auto mb-3 rounded-full flex items-center justify-center transition-all duration-500",
             isReady ? "bg-accent/60 animate-pulse" : "bg-destructive/20 animate-pulse-custom"
           )}>
             <div className={cn(
-              "w-16 h-16 rounded-full flex items-center justify-center transition-all duration-500",
+              "w-14 h-14 rounded-full flex items-center justify-center transition-all duration-500",
               isReady ? "bg-accent/80" : "bg-destructive/40"
             )}>
               <div className={cn(
-                "w-8 h-8 rounded-full transition-all duration-500",
+                "w-7 h-7 rounded-full transition-all duration-500",
                 isReady ? "bg-accent" : "bg-destructive"
               )}></div>
             </div>
@@ -92,14 +92,14 @@ const PlayerRegistration: React.FC = () => {
           )}
         </div>
         
-        <div className="space-y-4">
+        <div className="space-y-3">
           <div className="relative border-2 rounded-lg overflow-hidden border-border">
             <Input
               id="playerName"
               value={localPlayerName}
               onChange={handleInputChange}
               placeholder="Enter your name to play"
-              className="py-6 text-lg font-game border-0 focus-visible:ring-0"
+              className="py-5 text-lg font-game border-0 focus-visible:ring-0"
               maxLength={20}
               disabled={isReady}
             />
@@ -115,7 +115,7 @@ const PlayerRegistration: React.FC = () => {
               <Button
                 onClick={handleReadyClick}
                 disabled={!localPlayerName.trim()}
-                className="w-full py-6 font-game bg-primary text-primary-foreground hover:bg-primary/80"
+                className="w-full py-5 font-game bg-primary text-primary-foreground hover:bg-primary/80"
               >
                 READY TO PLAY
               </Button>
