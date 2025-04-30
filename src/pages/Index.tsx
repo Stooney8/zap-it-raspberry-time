@@ -6,9 +6,11 @@ import WireGame from '@/components/WireGame';
 import GameTimer from '@/components/GameTimer';
 import GameMessage from '@/components/GameMessage';
 import GameResults from '@/components/GameResults';
+import HardwareInstructions from '@/components/HardwareInstructions';
+import { Button } from '@/components/ui/button';
 
 const GameScreen = () => {
-  const { gameState } = useGameContext();
+  const { gameState, resetGame } = useGameContext();
   
   return (
     <div className="container py-8 px-4">
@@ -25,6 +27,20 @@ const GameScreen = () => {
       )}
       
       {gameState === 'finished' && <GameResults />}
+      
+      <div className="mt-8 text-center">
+        <Button 
+          variant="outline" 
+          className="font-game text-xs"
+          onClick={() => {
+            const audio = new Audio('/button-click.mp3');
+            audio.play().catch(err => console.error('Error playing sound:', err));
+            window.location.href = '/hardware';
+          }}
+        >
+          Hardware Setup
+        </Button>
+      </div>
     </div>
   );
 };

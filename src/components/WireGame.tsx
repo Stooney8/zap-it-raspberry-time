@@ -173,6 +173,28 @@ const WireGame: React.FC = () => {
     };
   }, [gameState, isLoopMoving]);
 
+  const handleMouseMove = (e: MouseEvent) => {
+    if (isLoopMoving && gameState === 'playing' && !isFinished) {
+      e.preventDefault();
+      updateLoopPosition(e as unknown as React.MouseEvent);
+    }
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    if (isLoopMoving && gameState === 'playing' && !isFinished && e.touches[0]) {
+      e.preventDefault();
+      updateLoopPositionTouch(e.touches[0] as unknown as React.Touch);
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsLoopMoving(false);
+  };
+
+  const handleTouchEnd = () => {
+    setIsLoopMoving(false);
+  };
+
   if (gameState !== 'playing') {
     return null;
   }
