@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useGameContext } from '@/context/GameContext';
 import { cn } from '@/lib/utils';
+import OnScreenKeyboard from '@/components/OnScreenKeyboard';
 
 const PlayerRegistration: React.FC = () => {
   const { playerName, setPlayerName, startGame, currentMessage } = useGameContext();
@@ -46,6 +47,20 @@ const PlayerRegistration: React.FC = () => {
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalPlayerName(e.target.value);
+  };
+  
+  const handleKeyPress = (key: string) => {
+    if (key === 'BACKSPACE') {
+      setLocalPlayerName(prev => prev.slice(0, -1));
+    } else {
+      setLocalPlayerName(prev => prev.length < 20 ? prev + key : prev);
+    }
+  };
+  
+  const handleSubmit = () => {
+    if (localPlayerName.trim()) {
+      handleReadyClick();
+    }
   };
   
   return (
@@ -91,13 +106,20 @@ const PlayerRegistration: React.FC = () => {
           </div>
           
           {!isReady && (
-            <Button
-              onClick={handleReadyClick}
-              disabled={!localPlayerName.trim()}
-              className="w-full py-6 font-game bg-primary text-primary-foreground hover:bg-primary/80"
-            >
-              READY TO PLAY
-            </Button>
+            <>
+              <OnScreenKeyboard 
+                onKeyPress={handleKeyPress} 
+                onSubmit={handleSubmit} 
+              />
+              
+              <Button
+                onClick={handleReadyClick}
+                disabled={!localPlayerName.trim()}
+                className="w-full py-6 font-game bg-primary text-primary-foreground hover:bg-primary/80"
+              >
+                READY TO PLAY
+              </Button>
+            </>
           )}
         </div>
       </CardContent>
