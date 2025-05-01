@@ -65,7 +65,7 @@ export default {
 				}
 			},
 			fontFamily: {
-				'game': ['"Press Start 2P"', 'monospace', '"Courier New"', 'Courier', 'system-ui', 'sans-serif'],
+				'game': ['"Press Start 2P"', 'system-ui', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

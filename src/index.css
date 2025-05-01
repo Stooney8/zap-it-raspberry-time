@@ -3,20 +3,46 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom font declaration with multiple formats for cross-browser support */
-@font-face {
-  font-family: 'Press Start 2P';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap; /* Important for loading performance */
-  src: url('/fonts/PressStart2P-Regular.woff2') format('woff2'),
-       url('/fonts/PressStart2P-Regular.woff') format('woff'),
-       url('/fonts/PressStart2P-Regular.ttf') format('truetype');
-}
-
 @layer base {
   :root {
-    /* ... keep existing code (theme variables) */
+    --background: 210 100% 12%;
+    --foreground: 60 100% 98%;
+
+    --card: 210 80% 20%;
+    --card-foreground: 60 100% 98%;
+
+    --popover: 210 80% 20%;
+    --popover-foreground: 60 100% 98%;
+
+    --primary: 60 100% 50%;
+    --primary-foreground: 210 100% 12%;
+
+    --secondary: 330 100% 65%;
+    --secondary-foreground: 60 100% 98%;
+
+    --muted: 210 50% 30%;
+    --muted-foreground: 215.4 16.3% 80%;
+
+    --accent: 120 100% 60%;
+    --accent-foreground: 210 100% 12%;
+
+    --destructive: 0 100% 65%;
+    --destructive-foreground: 60 100% 98%;
+
+    --border: 210 50% 30%;
+    --input: 214.3 31.8% 40%;
+    --ring: 222.2 84% 70%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -27,11 +53,10 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Press Start 2P', monospace, 'Courier New', Courier, system-ui, sans-serif;
+    font-family: 'Press Start 2P', system-ui, sans-serif;
   }
 }
 
-/* Restore the keyframe animations */
 @keyframes buzzing {
   0% {
     transform: translateX(0);
@@ -78,14 +103,4 @@
 
 .animate-glow {
   animation: glow 1.5s ease-in-out infinite;
-}
-
-/* Add a class for when font is loaded or not loaded */
-html.font-loaded .font-game {
-  font-family: 'Press Start 2P', monospace, 'Courier New', Courier, system-ui, sans-serif;
-}
-
-html.no-js .font-game {
-  font-family: monospace, 'Courier New', Courier, system-ui, sans-serif;
-  letter-spacing: -0.5px; /* Adjust spacing for better fallback appearance */
 }
