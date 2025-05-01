@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type Player = {
@@ -65,9 +64,13 @@ const funnyFinishMessages = [
 // List of fun emojis for players
 const funnyEmojis = [
   "⚡", "🤖", "👾", "🎮", "🕹️", "👽", "🤪", 
-  "🥴", "😵", "🥵", "🤯", "🧠", "👻", "🤡",
+  "🥴", "😵", "🥵", "🤯", "💥", "👻", "🤡",
   "🧙‍♂️", "🦄", "🐉", "🦹‍♀️", "🦸‍♂️", "🎯", "🧲"
 ];
+
+// Filter out the brain emoji and get default emojis
+const filteredEmojis = funnyEmojis.filter(emoji => emoji !== "🧠");
+const defaultEmoji = "⚡";
 
 interface GameProviderProps {
   children: ReactNode;
@@ -75,9 +78,7 @@ interface GameProviderProps {
 
 export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   const [playerName, setPlayerName] = useState<string>('');
-  const [playerEmoji, setPlayerEmoji] = useState<string>(
-    funnyEmojis[Math.floor(Math.random() * funnyEmojis.length)]
-  );
+  const [playerEmoji, setPlayerEmoji] = useState<string>(defaultEmoji);
   const [players, setPlayers] = useState<Player[]>([]);
   const [gameState, setGameState] = useState<GameState>('start');
   const [startTime, setStartTime] = useState<number | null>(null);
@@ -152,7 +153,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     setEndTime(null);
     setErrorCount(0);
     // Set a new random emoji for next player
-    setPlayerEmoji(funnyEmojis[Math.floor(Math.random() * funnyEmojis.length)]);
+    setPlayerEmoji(defaultEmoji);
     const randomMessage = funnyStartMessages[Math.floor(Math.random() * funnyStartMessages.length)];
     setCurrentMessage(randomMessage);
   };
