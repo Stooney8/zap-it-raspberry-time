@@ -81,7 +81,7 @@ const PlayerRegistration: React.FC = () => {
                 "w-7 h-7 rounded-full transition-all duration-500 flex items-center justify-center",
                 isReady ? "bg-accent" : "bg-destructive"
               )}>
-                <span className="text-lg">{playerEmoji}</span>
+                
               </div>
             </div>
           </div>
