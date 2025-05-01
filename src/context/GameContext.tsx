@@ -171,27 +171,27 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     finish: funnyFinishMessages,
   };
 
+  const value = {
+    playerName,
+    setPlayerName,
+    playerEmoji,
+    setPlayerEmoji,
+    players,
+    gameState,
+    startTime,
+    endTime,
+    errorCount,
+    startGame,
+    endGame,
+    resetGame,
+    addError,
+    funnyMessages,
+    currentMessage,
+    setCurrentMessage,
+  };
+
   return (
-    <GameContext.Provider
-      value={{
-        playerName,
-        setPlayerName,
-        playerEmoji,
-        setPlayerEmoji,
-        players,
-        gameState,
-        startTime,
-        endTime,
-        errorCount,
-        startGame,
-        endGame,
-        resetGame,
-        addError,
-        funnyMessages,
-        currentMessage,
-        setCurrentMessage,
-      }}
-    >
+    <GameContext.Provider value={value}>
       {children}
     </GameContext.Provider>
   );
