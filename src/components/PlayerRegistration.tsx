@@ -6,9 +6,10 @@ import { Input } from '@/components/ui/input';
 import { useGameContext } from '@/context/GameContext';
 import { cn } from '@/lib/utils';
 import OnScreenKeyboard from '@/components/OnScreenKeyboard';
+import EmojiSelector from '@/components/EmojiSelector';
 
 const PlayerRegistration: React.FC = () => {
-  const { playerName, setPlayerName, playerEmoji, startGame, currentMessage } = useGameContext();
+  const { playerName, setPlayerName, playerEmoji, setPlayerEmoji, startGame, currentMessage } = useGameContext();
   const [localPlayerName, setLocalPlayerName] = useState('');
   const [isReady, setIsReady] = useState(false);
   
@@ -65,12 +66,7 @@ const PlayerRegistration: React.FC = () => {
   
   return (
     <Card className="w-full max-w-md mx-auto border-primary bg-card">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-center font-game text-xl text-primary">
-          Buzz Wire Challenge
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
+      <CardContent className="pt-6">
         <div className="text-center mb-4">
           <p className="font-game text-sm mb-4">{currentMessage}</p>
           <div className={cn(
@@ -112,6 +108,13 @@ const PlayerRegistration: React.FC = () => {
           
           {!isReady && (
             <>
+              <div className="flex justify-center my-3">
+                <EmojiSelector 
+                  selectedEmoji={playerEmoji}
+                  onSelect={setPlayerEmoji}
+                />
+              </div>
+              
               <OnScreenKeyboard 
                 onKeyPress={handleKeyPress} 
                 onSubmit={handleSubmit} 
