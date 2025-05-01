@@ -49,7 +49,10 @@ const Leaderboard: React.FC = () => {
                     <td className="px-4 py-2 font-game text-xs">
                       {index + 1}
                     </td>
-                    <td className="px-4 py-2 font-game text-xs">
+                    <td className="px-4 py-2 font-game text-xs flex items-center">
+                      <span className="mr-2 text-lg animate-pulse-custom">
+                        {player.emoji || "⚡"}
+                      </span>
                       {player.name}
                     </td>
                     <td className="px-4 py-2 font-game text-xs">

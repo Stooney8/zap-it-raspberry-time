@@ -1,9 +1,11 @@
+
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type Player = {
   name: string;
   time: number;
   errors: number;
+  emoji: string;
 };
 
 type GameState = 'start' | 'playing' | 'finished';
@@ -11,6 +13,8 @@ type GameState = 'start' | 'playing' | 'finished';
 interface GameContextType {
   playerName: string;
   setPlayerName: (name: string) => void;
+  playerEmoji: string;
+  setPlayerEmoji: (emoji: string) => void;
   players: Player[];
   gameState: GameState;
   startTime: number | null;
@@ -58,12 +62,22 @@ const funnyFinishMessages = [
   "The wire fears YOU now!",
 ];
 
+// List of fun emojis for players
+const funnyEmojis = [
+  "⚡", "🤖", "👾", "🎮", "🕹️", "👽", "🤪", 
+  "🥴", "😵", "🥵", "🤯", "🧠", "👻", "🤡",
+  "🧙‍♂️", "🦄", "🐉", "🦹‍♀️", "🦸‍♂️", "🎯", "🧲"
+];
+
 interface GameProviderProps {
   children: ReactNode;
 }
 
 export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   const [playerName, setPlayerName] = useState<string>('');
+  const [playerEmoji, setPlayerEmoji] = useState<string>(
+    funnyEmojis[Math.floor(Math.random() * funnyEmojis.length)]
+  );
   const [players, setPlayers] = useState<Player[]>([]);
   const [gameState, setGameState] = useState<GameState>('start');
   const [startTime, setStartTime] = useState<number | null>(null);
@@ -113,6 +127,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
           name: playerName,
           time: now - startTime,
           errors: errorCount,
+          emoji: playerEmoji,
         };
         setPlayers(prevPlayers => {
           // Sort players by time (ascending) and then by errors (ascending)
@@ -136,6 +151,8 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     setStartTime(null);
     setEndTime(null);
     setErrorCount(0);
+    // Set a new random emoji for next player
+    setPlayerEmoji(funnyEmojis[Math.floor(Math.random() * funnyEmojis.length)]);
     const randomMessage = funnyStartMessages[Math.floor(Math.random() * funnyStartMessages.length)];
     setCurrentMessage(randomMessage);
   };
@@ -159,6 +176,8 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
       value={{
         playerName,
         setPlayerName,
+        playerEmoji,
+        setPlayerEmoji,
         players,
         gameState,
         startTime,

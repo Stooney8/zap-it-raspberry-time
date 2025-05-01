@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 import OnScreenKeyboard from '@/components/OnScreenKeyboard';
 
 const PlayerRegistration: React.FC = () => {
-  const { playerName, setPlayerName, startGame, currentMessage } = useGameContext();
+  const { playerName, setPlayerName, playerEmoji, startGame, currentMessage } = useGameContext();
   const [localPlayerName, setLocalPlayerName] = useState('');
   const [isReady, setIsReady] = useState(false);
   
@@ -82,9 +82,11 @@ const PlayerRegistration: React.FC = () => {
               isReady ? "bg-accent/80" : "bg-destructive/40"
             )}>
               <div className={cn(
-                "w-7 h-7 rounded-full transition-all duration-500",
+                "w-7 h-7 rounded-full transition-all duration-500 flex items-center justify-center",
                 isReady ? "bg-accent" : "bg-destructive"
-              )}></div>
+              )}>
+                <span className="text-lg">{playerEmoji}</span>
+              </div>
             </div>
           </div>
           {isReady && (
@@ -94,12 +96,15 @@ const PlayerRegistration: React.FC = () => {
         
         <div className="space-y-3">
           <div className="relative border-2 rounded-lg overflow-hidden border-border">
+            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-lg">
+              {playerEmoji}
+            </div>
             <Input
               id="playerName"
               value={localPlayerName}
               onChange={handleInputChange}
               placeholder="Enter your name to play"
-              className="py-5 text-lg font-game border-0 focus-visible:ring-0"
+              className="py-5 pl-10 text-lg font-game border-0 focus-visible:ring-0"
               maxLength={20}
               disabled={isReady}
             />
