@@ -3,6 +3,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom font declaration with multiple formats for cross-browser support */
+@font-face {
+  font-family: 'Press Start 2P';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap; /* Important for loading performance */
+  src: url('/fonts/PressStart2P-Regular.woff2') format('woff2'),
+       url('/fonts/PressStart2P-Regular.woff') format('woff'),
+       url('/fonts/PressStart2P-Regular.ttf') format('truetype');
+}
+
 @layer base {
   :root {
     --background: 210 100% 12%;
@@ -53,54 +64,8 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Press Start 2P', system-ui, sans-serif;
+    font-family: 'Press Start 2P', monospace, 'Courier New', Courier, system-ui, sans-serif;
   }
 }
 
-@keyframes buzzing {
-  0% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(2px);
-  }
-  50% {
-    transform: translateX(-2px);
-  }
-  75% {
-    transform: translateX(2px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-}
-
-@keyframes glow {
-  0%, 100% {
-    filter: drop-shadow(0 0 5px rgba(255, 255, 0, 0.7));
-  }
-  50% {
-    filter: drop-shadow(0 0 15px rgba(255, 255, 0, 1));
-  }
-}
-
-.animate-buzzing {
-  animation: buzzing 0.1s linear infinite;
-}
-
-.animate-pulse-custom {
-  animation: pulse 2s ease-in-out infinite;
-}
-
-.animate-glow {
-  animation: glow 1.5s ease-in-out infinite;
-}
+/* ... keep existing code (keyframe animations and utility classes) */

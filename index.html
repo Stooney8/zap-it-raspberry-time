@@ -17,9 +17,43 @@
     <meta name="twitter:site" content="@lovable_dev" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <!-- Font loading check script -->
+    <script>
+      document.documentElement.classList.add('no-js');
+      function fontLoadingCheck() {
+        // Create a span with Press Start 2P and one with fallback fonts
+        const test1 = document.createElement('span');
+        test1.style.fontFamily = '"Press Start 2P", monospace';
+        test1.style.position = 'absolute';
+        test1.style.visibility = 'hidden';
+        test1.textContent = 'Font Test';
+        
+        const test2 = document.createElement('span');
+        test2.style.fontFamily = 'monospace, "Courier New", Courier';
+        test2.style.position = 'absolute';
+        test2.style.visibility = 'hidden';
+        test2.textContent = 'Font Test';
+        
+        document.body.appendChild(test1);
+        document.body.appendChild(test2);
+        
+        // If widths are different, primary font has loaded
+        const fontLoaded = test1.offsetWidth !== test2.offsetWidth;
+        
+        if (fontLoaded) {
+          document.documentElement.classList.add('font-loaded');
+          document.documentElement.classList.remove('no-js');
+        } else {
+          console.warn('Primary arcade font not loaded, using fallback');
+        }
+        
+        document.body.removeChild(test1);
+        document.body.removeChild(test2);
+      }
+      
+      // Check after initial page load
+      window.addEventListener('load', fontLoadingCheck);
+    </script>
   </head>
 
   <body>
